@@ -17,17 +17,18 @@ class Solver(BaseSolver):
     requirements = ['scikit-learn']
 
     parameters = {
-        'dual': [True, False],
+        'solver': ['liblinear'],
     }
-    parameter_template = "dual={dual}"
+    parameter_template = "solver={solver}"
 
     def set_objective(self, X, y, C):
         self.X, self.y, self.C = X, y, C
 
         warnings.filterwarnings('ignore', category=ConvergenceWarning)
 
-        self.clf = LinearSVC(C=self.C, penalty='l2',
-                             fit_intercept=False, tol=1e-12)
+        self.clf = LinearSVC(C=self.C, penalty='l2', dual=True,
+                             fit_intercept=False, tol=1e-12,
+                             loss='hinge')
 
     def run(self, n_iter):
         self.clf.max_iter = n_iter

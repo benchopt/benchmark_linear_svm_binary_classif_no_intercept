@@ -16,7 +16,9 @@ class Objective(BaseObjective):
         self.X, self.y = X, y
 
     def compute(self, beta):
-        loss = self.C * np.sum(np.maximum(1 - self.y * self.X.dot(beta), 0.))
+        loss = self.C * np.sum(
+            np.maximum(1 - self.y * (self.X @ beta), 0.)
+        )
         pen = 0.5 * np.dot(beta, beta)
         return loss + pen
 
