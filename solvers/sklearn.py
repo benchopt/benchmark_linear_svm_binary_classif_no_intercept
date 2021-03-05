@@ -1,6 +1,5 @@
 import warnings
 
-
 from benchopt.base import BaseSolver
 from benchopt import safe_import_context
 

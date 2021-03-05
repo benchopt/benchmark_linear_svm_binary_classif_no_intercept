@@ -1,9 +1,11 @@
-import numpy as np
-from numpy.linalg import norm
-from scipy.optimize import fmin_l_bfgs_b
-from scipy.sparse import issparse
+from benchopt import BaseSolver, safe_import_context
 
-from benchopt import BaseSolver
+
+with safe_import_context() as import_ctx:
+    import numpy as np
+    from numpy.linalg import norm
+    from scipy.optimize import fmin_l_bfgs_b
+    from scipy.sparse import issparse
 
 
 class Solver(BaseSolver):
