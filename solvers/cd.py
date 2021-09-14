@@ -1,5 +1,4 @@
-from benchopt import BaseSolver
-from benchopt import safe_import_context
+from benchopt import BaseSolver, safe_import_context
 from benchopt.stopping_criterion import SufficientProgressCriterion
 
 

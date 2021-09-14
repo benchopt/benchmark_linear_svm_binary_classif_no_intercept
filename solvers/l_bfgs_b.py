@@ -1,6 +1,6 @@
-from benchopt import BaseSolver
-from benchopt import safe_import_context
+from benchopt import BaseSolver, safe_import_context
 from benchopt.stopping_criterion import SufficientProgressCriterion
+
 
 with safe_import_context() as import_ctx:
     import numpy as np
