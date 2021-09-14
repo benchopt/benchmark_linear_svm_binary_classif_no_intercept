@@ -1,4 +1,5 @@
 from benchopt import BaseSolver, safe_import_context
+from benchopt.stopping_criterion import SufficientProgressCriterion
 
 
 with safe_import_context() as import_ctx:
@@ -29,6 +30,10 @@ class Solver(BaseSolver):
 
     stop_strategy = 'iteration'
     support_sparse = True
+
+    # We increase patience to give enough time to the dual solver
+    # to actually decrease the primal objective
+    stopping_criterion = SufficientProgressCriterion(eps=1e-4, patience=10)
 
     def set_objective(self, X, y, C):
         self.X, self.y, self.C = X, y, C
