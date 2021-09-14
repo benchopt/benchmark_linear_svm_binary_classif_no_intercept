@@ -1,9 +1,12 @@
-import numpy as np
-from numpy.linalg import norm
-from scipy.optimize import fmin_l_bfgs_b
-from scipy.sparse import issparse
-
 from benchopt import BaseSolver
+from benchopt import safe_import_context
+from benchopt.stopping_criterion import SufficientProgressCriterion
+
+with safe_import_context() as import_ctx:
+    import numpy as np
+    from numpy.linalg import norm
+    from scipy.optimize import fmin_l_bfgs_b
+    from scipy.sparse import issparse
 
 
 class Solver(BaseSolver):
@@ -11,6 +14,9 @@ class Solver(BaseSolver):
 
     stop_strategy = 'iteration'
     support_sparse = True
+    # We increase patience to give enough time to the dual solver
+    # to actually decrease the primal objective
+    stopping_criterion = SufficientProgressCriterion(eps=1e-4, patience=10)
 
     def set_objective(self, X, y, C):
         self.X, self.y, self.C = X, y, C
