@@ -6,7 +6,7 @@ class Objective(BaseObjective):
     name = "SVM Binary Classification (no intercept)"
 
     parameters = {
-        'C': [1., 0.1],
+        'C': [0.01],
     }
 
     def __init__(self, C=1.):
