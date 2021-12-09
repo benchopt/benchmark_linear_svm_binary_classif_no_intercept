@@ -1,4 +1,5 @@
 import warnings
+from benchopt.stopping_criterion import SufficientProgressCriterion
 
 from benchopt import BaseSolver, safe_import_context
 
@@ -13,6 +14,7 @@ class Solver(BaseSolver):
 
     install_cmd = 'conda'
     requirements = ['scikit-learn']
+    stopping_criterion = SufficientProgressCriterion(eps=1e-4, patience=10)
 
     parameters = {
         'solver': ['liblinear'],

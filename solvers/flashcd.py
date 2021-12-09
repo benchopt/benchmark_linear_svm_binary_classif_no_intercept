@@ -1,13 +1,13 @@
 from benchopt import BaseSolver, safe_import_context
 from benchopt.stopping_criterion import SufficientProgressCriterion
 
-
 with safe_import_context() as import_ctx:
     from flashcd.estimators import SVC
 
 
 class Solver(BaseSolver):
     name = 'flashcd'
+    stop_strategy = 'iteration'
 
     install_cmd = 'conda'
     requirements = ['flashcd']
