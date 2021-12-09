@@ -7,11 +7,12 @@ with safe_import_context() as import_ctx:
 
 class Solver(BaseSolver):
     name = "lightning"
-    stop_strategy = "iteration"
 
     install_cmd = "conda"
     requirements = ["sklearn-contrib-lightning"]
-    stopping_criterion = SufficientProgressCriterion(eps=1e-4, patience=10)
+    stopping_criterion = SufficientProgressCriterion(
+        eps=1e-4, patience=10, strategy="iteration"
+    )
 
     def set_objective(self, X, y, C):
         self.X, self.y, self.C = X, y, C
