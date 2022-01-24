@@ -28,7 +28,7 @@ class Solver(BaseSolver):
 
         self.clf = LinearSVC(C=self.C, penalty='l2', dual=True,
                              fit_intercept=False, tol=1e-12,
-                             loss='hinge')
+                             loss='hinge', random_state=0)
 
     def run(self, n_iter):
         self.clf.max_iter = n_iter
