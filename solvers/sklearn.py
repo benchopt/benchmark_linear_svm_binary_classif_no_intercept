@@ -1,4 +1,5 @@
 import warnings
+from benchopt.stopping_criterion import SufficientProgressCriterion
 
 from benchopt import BaseSolver, safe_import_context
 
@@ -13,6 +14,7 @@ class Solver(BaseSolver):
 
     install_cmd = 'conda'
     requirements = ['scikit-learn']
+    stopping_criterion = SufficientProgressCriterion(eps=1e-4, patience=10)
 
     parameters = {
         'solver': ['liblinear'],
@@ -26,7 +28,7 @@ class Solver(BaseSolver):
 
         self.clf = LinearSVC(C=self.C, penalty='l2', dual=True,
                              fit_intercept=False, tol=1e-12,
-                             loss='hinge')
+                             loss='hinge', random_state=0)
 
     def run(self, n_iter):
         self.clf.max_iter = n_iter

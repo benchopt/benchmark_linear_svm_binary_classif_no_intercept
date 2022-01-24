@@ -1,5 +1,5 @@
 from benchopt import BaseDataset, safe_import_context
-
+from sklearn.preprocessing import StandardScaler
 with safe_import_context() as import_ctx:
     import numpy as np
 
@@ -10,8 +10,8 @@ class Dataset(BaseDataset):
 
     parameters = {
         'n_samples, n_features': [
-            (100, 5000),
-            (100, 10000)]
+            (500, 100),
+            (100, 500)]
     }
 
     def __init__(self, n_samples=10, n_features=50, random_state=42):
@@ -22,8 +22,10 @@ class Dataset(BaseDataset):
     def get_data(self):
         rng = np.random.RandomState(self.random_state)
         X = rng.randn(self.n_samples, self.n_features)
-        y = 2*(rng.randn(self.n_samples) > 0) - 1
-
+        y = rng.randn(self.n_samples)
+        y = np.sign(y)
+        scaler = StandardScaler()
+        X = scaler.fit_transform(X)
         data = dict(X=X, y=y)
 
         return self.n_features, data

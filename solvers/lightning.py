@@ -1,4 +1,5 @@
 from benchopt import BaseSolver, safe_import_context
+from benchopt.stopping_criterion import SufficientProgressCriterion
 
 with safe_import_context() as import_ctx:
     from lightning.classification import LinearSVC
@@ -6,10 +7,12 @@ with safe_import_context() as import_ctx:
 
 class Solver(BaseSolver):
     name = "lightning"
-    stop_strategy = "iteration"
 
     install_cmd = "conda"
     requirements = ["sklearn-contrib-lightning"]
+    stopping_criterion = SufficientProgressCriterion(
+        eps=1e-4, patience=10, strategy="iteration"
+    )
 
     def set_objective(self, X, y, C):
         self.X, self.y, self.C = X, y, C
