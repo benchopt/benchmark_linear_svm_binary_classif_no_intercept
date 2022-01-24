@@ -36,7 +36,7 @@ def cd_dual(yX, C, n_iter):
         for j in range(n_samples):
             old_mu_j = mu[j]
             grad_f_j = yX[j] @ w - 1
-            new_mu_j = np.max(0, np.min(old_mu_j - grad_f_j / lipschitz[j], C))
+            new_mu_j = max(0, min(old_mu_j - grad_f_j / lipschitz[j], C))
 
             if new_mu_j != old_mu_j:
                 w += yX[j] * (new_mu_j - old_mu_j)
