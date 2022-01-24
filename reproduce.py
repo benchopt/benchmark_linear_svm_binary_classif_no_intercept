@@ -19,15 +19,6 @@ def loss(w, yX, C):
 
 
 @njit
-def clip(x, C):
-    if x > C:
-        return C
-    if x < 0:
-        return 0
-    return x
-
-
-@njit
 def cd_dual(yX, C, n_iter):
     """Solve problem with coordinate descent in the dual, ie minimize:
     norm(yX @ mu) ** 2 / 2 + mu.sum()    subject to 0 <= mu <= C
@@ -45,7 +36,7 @@ def cd_dual(yX, C, n_iter):
         for j in range(n_samples):
             old_mu_j = mu[j]
             grad_f_j = yX[j] @ w - 1
-            new_mu_j = clip(old_mu_j - grad_f_j / lipschitz[j], C)
+            new_mu_j = np.max(0, np.min(old_mu_j - grad_f_j / lipschitz[j], C))
 
             if new_mu_j != old_mu_j:
                 w += yX[j] * (new_mu_j - old_mu_j)
