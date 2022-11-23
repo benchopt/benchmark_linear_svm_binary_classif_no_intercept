@@ -3,6 +3,7 @@ from benchopt import BaseObjective
 
 
 class Objective(BaseObjective):
+    min_benchopt_version = "1.3"
     name = "SVM Binary Classification (no intercept)"
 
     parameters = {
@@ -22,5 +23,5 @@ class Objective(BaseObjective):
         pen = 0.5 * np.dot(beta, beta)
         return loss + pen
 
-    def to_dict(self):
+    def get_objective(self):
         return dict(X=self.X, y=self.y, C=self.C)
